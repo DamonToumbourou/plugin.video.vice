@@ -5,7 +5,8 @@
     <import addon="script.module.xbmcswift2" version="2.4.0"/>
     <import addon="script.module.beautifulsoup4" version="4.3.1"/>
     <import addon="script.module.requests" version="1.1.0"/>
-    <import addon="script.module.selenium" version="2.48.0"/> 
+    <import addon="script.module.webdriver" version="1.0.0"/> 
+
 </requires>
   <extension point="xbmc.python.pluginsource" library="addon.py">
     <provides>video</provides>
