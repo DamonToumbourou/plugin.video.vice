@@ -20,10 +20,19 @@ def main_menu():
 @plugin.route('/all_shows/') 
 def all_shows():
     url = "http://www.vice.com/en_au/videos"
-
-    items = vice.get_shows(url)
+   
+    items = []
     
+    content = vice.get_shows(url)
+    
+    for con in content:
+        items.append({
+            'label': con['label'],
+            'path': con['path'],
+        })
+
     return items
+
 
 if __name__ == '__main__':
     plugin.run()
