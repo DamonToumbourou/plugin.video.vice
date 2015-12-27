@@ -19,16 +19,17 @@ def main_menu():
 
 @plugin.route('/all_shows/') 
 def all_shows():
-    url = "http://www.vice.com/en_au/videos"
+    url = "https://www.youtube.com/user/vice/channels"
    
     items = []
     
-    content = vice.get_shows(url)
+    content = vice.get_channels(url)
     
     for con in content:
         items.append({
             'label': con['label'],
             'path': con['path'],
+            'thumbnail': con['thumbnail'],
         })
 
     return items

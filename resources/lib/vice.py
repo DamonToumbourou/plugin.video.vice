@@ -4,28 +4,47 @@ import re
 import requests
 import os
 
-SHOWS_URL = "https://www.youtube.com/user/vice/channels"
+URL = "https://www.youtube.com"
+CHANNEL_URL = "https://www.youtube.com/user/vice/channels"
 
-def get_shows(url):
+def get_channels(url):
     page = requests.get(url)
     soup = bs(page.text, 'html.parser') 
     
-    content = soup.find_all('div', {'class': 'yt-lockup-content'})
-    
-    output = []
-    for i in content:
-        label = i.find('title')
-        label = i.get_text()
-        label = re.search(r'.+?(?=[-])', label)
-        label = label.group(0)
-        print 'label: '
-        print label
-        print '\n'
-    
-        path = i.find('a')
-        path = path.get('href')
-        print 'href: '
-        print path
-        print '\n'
+    soup = soup.find('li', {'class': 'feed-item-container yt-section-hover-container browse-list-item-container branded-page-box vve-check '}) 
+    content = soup.find_all('div', {'class': 'yt-lockup clearfix  yt-lockup-channel yt-lockup-grid'})
+    #thumbnails = soup.find_all('span', {'class': 'yt-thumb-clip'})
 
-get_shows(SHOWS_URL)
+    output = []
+
+    for i in content:
+        try:
+            label = i.find('title')
+            label = i.get_text()
+            label = re.search(r'.+?(?=(- C))', label)
+            label = label.group(0)
+            
+            path = i.find('a')
+            path = path.get('href')
+            
+            thumbnail = i.img['data-thumb']
+
+            items = {
+                'label': label,
+                'path': path,
+                'thumbnail': thumbnail,
+            }
+
+            output.append(items)
+
+        except AtrributeError:
+            continue
+
+    return output
+
+get_channels(CHANNEL_URL)
+
+#def get_sub_shows(url):
+
+
+
