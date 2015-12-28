@@ -1,4 +1,11 @@
-plugin.video.abcradionational
-=============================
+Vice Plugin for Kodi
+------------------------------------
+Watch videos from Vice.
 
-XBMC addon for video stream from ABC Radio National TV - RNTV 
+Setup/Installation: The plugin should be installed through the official Kodi repository.
+
+Contact: dtoumbourou@gmail.com
+
+-------------------------------------
+Vice is an ever-expanding nebula of immersive investigative journalism, uncomfortable sociological examination, uncouth activities, making fun of people ...
+ 

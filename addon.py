@@ -1,6 +1,7 @@
 from xbmcswift2 import Plugin
 from resources.lib import vice
 
+
 plugin = Plugin()
 
 
@@ -11,11 +12,27 @@ def main_menu():
         {
             'label': plugin.get_string(30000),
             'path': plugin.url_for('all_shows'),
+        },
+        {
+            'label': 'test',
+            'path': plugin.url_for('test_shows'),
         }
     ]
 
     return items
 
+@plugin.route('/test_shows/')
+def test_shows():
+    
+    items = []
+
+    content = vice.get_playable_content('https://www.youtube.com/playlist')
+    print 'Content: ^^^^^'
+    print len(content)
+    print content
+
+    return items
+    
 
 @plugin.route('/all_shows/') 
 def all_shows():
@@ -23,13 +40,58 @@ def all_shows():
    
     items = []
     
-    content = vice.get_channels(url)
+    content = vice.get_shows(url)
     
-    for con in content:
+    for i in content:
         items.append({
-            'label': con['label'],
-            'path': con['path'],
-            'thumbnail': con['thumbnail'],
+            'label': i['label'],
+            'path': plugin.url_for('all_shows_categorys', url=i['path']),
+            'thumbnail': i['thumbnail'],
+        })
+
+    return items
+
+
+@plugin.route('/all_shows/<url>/')
+def all_shows_categorys(url):
+
+    items = []
+
+    content = vice.get_shows_categorys(url)
+    print 'CONTENT ############'
+    print content
+    print len(content)
+    for i in content:
+        items.append({
+            'label': i['label'],
+            'path': plugin.url_for('playable_content', url=i['path']),
+        })
+
+    return items
+
+
+@plugin.route('/all_shows/all_shows_categorys/<url>/')
+def playable_content(url): 
+   
+    items = []
+
+    plugin_url = 'plugin://plugin.video.youtube/?action=play_video&videoid'
+    
+    items.append({
+        'label': 'Damon',
+        })
+
+    url = 'https://www.youtube.com/playlist?list=PL1ryZU_Powd18tKG3q9D-oLOnrtOFMMpy'
+    content = vice.get_playble_content(url)
+
+    print 'Content: ######$$@@@'
+    print content
+    print len(content)
+
+    for i in content:
+        items.append({
+            'label': i['label'],
+            'path': plugin_url + i['path'],
         })
 
     return items
