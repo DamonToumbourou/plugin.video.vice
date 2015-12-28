@@ -1,6 +1,6 @@
 from xbmcswift2 import Plugin
 from resources.lib import vice
-
+import urllib3.contrib.pyopenssl
 
 plugin = Plugin()
 
@@ -24,12 +24,13 @@ def main_menu():
 @plugin.route('/test_shows/')
 def test_shows():
     
-    items = []
+    url = 'https://www.youtube.com/playlist?list=PL1ryZU_Powd1ekQJtRz0tLand_PJrrneD'
+    
+    items = vice.get_playable_content(url)
 
-    content = vice.get_playable_content('https://www.youtube.com/playlist')
     print 'Content: ^^^^^'
-    print len(content)
-    print content
+    print len(items)
+    print items
 
     return items
     
