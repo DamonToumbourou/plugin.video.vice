@@ -86,6 +86,7 @@ def get_hbo_content(url):
             output.append(i)
     
     output = output[1:100]
+
     return output
 
 
@@ -117,5 +118,3 @@ def get_latest_content(url):
         output.append(items)
 
     return output
-
-get_latest_content('https://www.youtube.com/user/vice/videos')

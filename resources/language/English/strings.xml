@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0.0" encoding="utf-8" standalone="yes"?>
 <strings>
     <!-- Plugin name -->
-    <string id="30000">LATEST Videos</string>
-    <string id="30001">VICE on HBO</string>
-    <string id="30002">BROWSE SHOWS</string>
+    <string id="30000">LATEST Vice</string>
+    <string id="30001">Vice on HBO</string>
+    <string id="30002">BROWSE Vice</string>
 </strings>

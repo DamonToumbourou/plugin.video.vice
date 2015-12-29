@@ -14,14 +14,17 @@ def main_menu():
         {
             'label': plugin.get_string(30000),
             'path': plugin.url_for('latest_videos'),
+            'thumbnail': 'https://vice-images.vice.com/images/articles/meta/2015/06/25/watch-a-sneak-peek-from-our-season-three-finale-of-vice-on-hbo-915-1435241870.jpg?resize=*:*&output-quality=75',
         },
         {   
             'label': plugin.get_string(30001),
             'path': plugin.url_for('vice_on_hbo'),
+            'thumbnail': 'http://cdn0.documentaryheaven.com/wp-content/uploads/2015/03/our-rising-oceans-vice-on-hbo-documentary-heaven.jpg',
         },
         {
             'label': plugin.get_string(30002),
             'path': plugin.url_for('all_shows'),
+            'thumbnail': 'http://g.fastcompany.net/multisite_files/cocreate/imagecache/1280/article_feature/Vice-Shane%20Smith%20in%20Libya_%20Credit%20Tim%20Freccia.jpg',
         }
     ]
 
