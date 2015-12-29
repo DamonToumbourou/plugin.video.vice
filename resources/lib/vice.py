@@ -40,66 +40,82 @@ def get_shows(url):
             continue
 
     return output
-
-
-def get_shows_categorys(url):
-    page = requests.get(url, verify=False)
-    soup = bs(page.text, 'html.parser')
-
-    content = soup.find_all('li', {'class': 'feed-item-container yt-section-hover-container browse-list-item-container branded-page-box vve-check '})
     
-    output = []
 
-    for i in content:
-        label = i.find('span', {'class': 'branded-page-module-title-text'})
-        label = label.get_text().strip()
-        
-        path = path.get('href')
-        path = URL + path
-
-        items = {
-                'label': label,
-                'path': path,
-        }
-
-        output.append(items)
-    
-    return output
-
-
-def get_playable_content(url):
-    page = requests.post(url)
+def get_show_content(url):
+    page = requests.get(url)
     soup = bs(page.text, 'html.parser')
-    content = soup.find_all('td', {'class': 'pl-video-title'})
+    content = soup.find_all('div', {'class': 'yt-lockup-dismissable'})
     
     output = []
      
     for i in content:
         
-        label = i.get_text().split('\n')[2].strip()
-        print 'label: '
-        print label
-        print 'end'
-        print '\n'
+        label = i.find('h3', {'class': 'yt-lockup-title '})
+        label = label.find('a').get('title')
         
-        path = i.find('a')
-        path = path.get('href')
+        path_thumb = i.find('a')
+
+        path = path_thumb.get('href')
         path = re.search(r'\=(.*)', path).group(0)
-        print 'path: '
-        print path
-        print '\n'
+        
+        thumb = path_thumb.find('img').get('data-thumb')
+        thumb = 'https:' + thumb
 
-        output.append({
-            'label': label,
-            'path': path,
-        })
+        items = {
+                'label': label,
+                'path': path,
+                'thumbnail': thumb,
+            }
 
-    output.append({
-        'label': 'Damon',
-        'path': 'test',
-    })
+        output.append(items)
 
- 
     return output
 
-get_playable_content('https://www.youtube.com/playlist?list=PL1ryZU_Powd1ekQJtRz0tLand_PJrrneD')
+
+def get_hbo_content(url):
+    content = get_latest_content(url)
+    
+    match = 'HBO'
+    
+    output = []
+
+    for i in content:
+        if match in i['label']:     
+         
+            output.append(i)
+    
+    output = output[1:100]
+    return output
+
+
+def get_latest_content(url):
+    page = requests.get(url)
+    soup = bs(page.text, 'html.parser')
+    content = soup.find_all('div', {'class': 'yt-lockup-dismissable'})
+    
+    output = []
+     
+    for i in content:
+        
+        label = i.find('h3', {'class': 'yt-lockup-title '})
+        label = label.find('a').get('title')
+        path_thumb = i.find('a')
+
+        path = path_thumb.get('href')
+        path = re.search(r'\=(.*)', path).group(0)
+
+        thumb = i.find('img').get('src')
+        thumb = 'https:' + thumb
+
+        items = {
+                'label': label,
+                'path': path,
+                'thumbnail': thumb,
+            }
+
+        output.append(items)
+
+    return output
+
+get_latest_content('https://www.youtube.com/user/vice/videos')
